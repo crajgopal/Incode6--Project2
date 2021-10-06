@@ -5,25 +5,26 @@ document.addEventListener("DOMContentLoaded",()=> {
     let sub2 =document.getElementById("submit2");
 
 
-    /*javascript validations : email must contian @ and .characters,
-     must be atleast one character before and after @, must be atleast 
-     2 characters after .(dot)
-
-    */
-
+    /*javascript validations using regular expressions */
 
 let surname= document.forms.form1.sname;
 let fname =document.forms.form1.fname;
 let email=document.forms.form1.email;
 let msg =document.forms.form1.textmsg;
+let phonenumb =document.form1.phonenumber;
 
+const emailRegx = /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/;
+const nameRegx =/^[A-Za-z0-9Ä-Öä-ö-ß\-'\.]+$/ ;
+const messageRegx =/^[a-zA-Z0-9 ^\s] +$/;
+const numbRegx= /^[0-9]+$/;
 
-
+ // form1.setAttribute("nonvalidate", true);
     sub1.addEventListener("click", validate);
+
 
     sub2.addEventListener("click", function()
     { 
-        console.log( "clicked2" + document.getElementById("form2"))   ;
+       // console.log( "clicked2" + document.getElementById("form2"))   ;
         
        document.getElementById("form2").style.display = "none";
        document.getElementById("form1").reset();
@@ -32,89 +33,67 @@ let msg =document.forms.form1.textmsg;
    
    function validate(event)  
     {
+        event.preventDefault();
+        if((isValid(surname,nameRegx)==false)||(surname.value==" ")){
 
-        let email1 =email.value;
-        let atposition=email1.indexOf("@");  
-        let dotposition=email1.lastIndexOf(".");  
+            alert('Please enter a valid Surname ');
+            surname.value=null;
+            surname.focus();
+
+        }
+        else  if((isValid(fname,nameRegx)==false)||(fname.value==" ")){
+
+            alert('Please enter a valid Firstname');
+           fname.value=null;
+            fname.focus();
+
+        }
+        /*
+        else if ((isValid(phonenumb,numbRegx)==false)&&(phonenumb.value!==" ")){
+
+            alert ("Please enter valid phone number");
+            phonenumb.focus();
+
+        } */
+
+        else  if((isValid(email,emailRegx)==false)||(email.value==" ")){
+
+            alert('Please enter a valid Email');
+            email.value=null;
+            email.focus();
+
+        }
+       
         
-        
+        else  if((isValid(msg,nameRegx)==false)||(msg.value ==" ")){
 
-   if (surname.value == "") {
+            alert('Please enter a valid message');
+            msg.value=null;
+            msg.focus();
 
-        alert("Please enter your surname.");
-        surname.focus();
-    }
-   else if(fname.value == "") {
-        alert("Please enter your firstname.");
-        fname.focus();
-   
-
-    }
-
-else if (email.value==""){
-
-    
-    alert("Enter valid email address!");
-    email.focus();
-
-
-}
-/*
-    
-    else if((atposition< 1 )|| (dotposition<atposition+2) || (dotposition+2>=email1.length))
-    {
-
-
-        alert("InValid email address!");
-        email.focus();
-          
-     
-       }
-  
-*/
-  
-   else  if(msg.value == "") {
-        alert("Please enter your Message.");
-        msg.focus();
-   
-
-    }
-   
-   
-    
-    else 
-    
-    { 
-
-          document.getElementById("form2").style.display="block";
-         console.log("Surname is "+surname.value +" Firstname is "+ fname.value+" email is"+email.value +" Message is "+ msg.value);
-         event.preventDefault();
-    }
-
- 
-    
-
-};
-
-
-/*
-function validateEmail(email)
-{
-   let email1=email.value;
-    console.log("in validate function  email is "+email1);
-     
-       let atposition=email1.indexOf("@");  
-       let dotposition=email1.lastIndexOf(".");  
-       if (atposition<1 || dotposition<atposition+2 || dotposition+2>=email1.length)
-       {  
-         alert("Please enter a valid e-mail address \n atpostion:"+atposition+"\n dotposition:"+dotposition);  
-        email.focus();
-         return false;
-       }  
+        }
        
 
-      }*/
+       else if(isValid(surname,nameRegx) && isValid(fname,nameRegx)&& isValid(email,emailRegx) &&isValid(msg,nameRegx))
+        {
+          console.log("Surname is "+surname.value +"FirstName is "+fname.value +"Phonenumber is "+phonenumb.value +"Email address is "+ email.value+"Message is "+msg.value);
+         document.getElementById("form2").style.display="block";
+         
+       }
+        
+    }
+ 
 
-})
+
+
+function isValid(element, regex)
+{
+
+    return regex.test(element.value);
+    
+    
+}
+
+});
    
 
