@@ -27,7 +27,6 @@ const numbRegx= /^(^1300|1800\d{6})|(^0[2|3|7|8]{1}[0-9]{8})|(^13\d{4})|(^04\d{2
 
     sub2.addEventListener("click", function()
     { 
-       // console.log( "clicked2" + document.getElementById("form2"))   ;
         
        document.getElementById("form2").style.display = "none";
        document.getElementById("form1").reset();
