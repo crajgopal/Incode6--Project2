@@ -16,7 +16,10 @@ let phonenumb =document.form1.phonenumber;
 const emailRegx = /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/;
 const nameRegx =/^[A-Za-z0-9Ä-Öä-ö-ß\-'\.]+$/ ;
 const messageRegx =/^[a-zA-Z0-9 ^\s] +$/;
-const numbRegx= /^[0-9]+$/;
+const numbRegx= /^(^1300|1800\d{6})|(^0[2|3|7|8]{1}[0-9]{8})|(^13\d{4})|(^04\d{2,3}\d{6})+$/;
+
+//Australian phone numbers: Matches  formats including 10-digit landline numbers with valid area code, 13, 1300, 1800 plus mobile 10 -digit formats.
+
 
  // form1.setAttribute("nonvalidate", true);
     sub1.addEventListener("click", validate);
@@ -48,13 +51,18 @@ const numbRegx= /^[0-9]+$/;
             fname.focus();
 
         }
-        /*
-        else if ((isValid(phonenumb,numbRegx)==false)&&(phonenumb.value!==" ")){
+        
+        else if ((isValid(phonenumb,numbRegx)==false)){
 
-            alert ("Please enter valid phone number");
+            if(phonenumb.value=="null")
+            {
+                console.log("phone numebr is not entered");
+            }
+            else {
+            alert ("Please enter valid Australian 10 digit phone number");
             phonenumb.focus();
-
-        } */
+            }
+        } 
 
         else  if((isValid(email,emailRegx)==false)||(email.value==" ")){
 
